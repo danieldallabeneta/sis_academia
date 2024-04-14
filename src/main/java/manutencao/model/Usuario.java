@@ -3,6 +3,9 @@ package manutencao.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity(name="tbusuario")
 public class Usuario {
@@ -11,14 +14,19 @@ public class Usuario {
     @GeneratedValue
     private Integer id;
     
-    //@Size(min=3, message="O nome deve conter ao menos 3 letras")
+    @Size(min=3, message="O nome deve conter ao menos 3 letras")
     private String nome;
+    @NotNull
     private String nascimento;
+    @NotNull
     private String cpf;
     private String sexo;
+    @NotNull
     private String ativo;
     private String fone;
     private String celular;
+    
+    @Email
     private String email;
     private String cidade;
     private String uf;
