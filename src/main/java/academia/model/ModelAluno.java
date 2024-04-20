@@ -1,47 +1,53 @@
-package manutencao.model;
+package academia.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.Date;
 
-@Entity(name="tbusuario")
-public class Usuario {
+@Entity(name = "tbaluno")
+public class ModelAluno {
 
     @Id
     @GeneratedValue
     private Integer id;
-    
-    @Size(min=3, message="O nome deve conter ao menos 3 letras")
+
+    @Size(min = 3)
+    @NotNull
     private String nome;
-    @NotNull
-    private String nascimento;
-    @NotNull
-    private String cpf;
-    private String sexo;
-    @NotNull
-    private String ativo;
-    private String fone;
+
+    private Date dataNascimento;
+
+    @Max(value = 2)
+    @Min(value = 1)
+    private Integer sexo;
+
+    @Max(value = 1)
+    @Min(value = 0)
+    private Integer ativo;
+
     private String celular;
-    
-    @Email
     private String email;
     private String cidade;
     private String uf;
     private String cep;
     private String rua;
-    private Integer numero;
+    private String numero;
     private String bairro;
-    private String tipo;
+    private Integer loja;
 
-    public Usuario(String nome, String nascimento, String sexo, String ativo, String fone, String celular, String email, String cidade, String uf, String cep, String rua, Integer numero, String bairro) {
+    public ModelAluno(Integer id, String nome, Date dataNascimento, Integer sexo, Integer ativo, String celular, String email,
+            String cidade, String uf, String cep, String rua, String numero, String bairro, Integer loja) {
+        super();
+        this.id = id;
         this.nome = nome;
-        this.nascimento = nascimento;
+        this.dataNascimento = dataNascimento;
         this.sexo = sexo;
         this.ativo = ativo;
-        this.fone = fone;
         this.celular = celular;
         this.email = email;
         this.cidade = cidade;
@@ -50,10 +56,10 @@ public class Usuario {
         this.rua = rua;
         this.numero = numero;
         this.bairro = bairro;
+        this.loja = loja;
     }
-    
-    public Usuario() {
-            super();
+
+    public ModelAluno() {
     }
 
     public Integer getId() {
@@ -72,44 +78,28 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getNascimento() {
-        return nascimento;
+    public Date getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setNascimento(String nascimento) {
-        this.nascimento = nascimento;
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-    
-    public String getSexo() {
+    public Integer getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(Integer sexo) {
         this.sexo = sexo;
     }
 
-    public String getAtivo() {
+    public Integer getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(String ativo) {
+    public void setAtivo(Integer ativo) {
         this.ativo = ativo;
-    }
-
-    public String getFone() {
-        return fone;
-    }
-
-    public void setFone(String fone) {
-        this.fone = fone;
     }
 
     public String getCelular() {
@@ -160,11 +150,11 @@ public class Usuario {
         this.rua = rua;
     }
 
-    public Integer getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
@@ -176,18 +166,17 @@ public class Usuario {
         this.bairro = bairro;
     }
 
-    public String getTipo() {
-        return tipo;
+    public Integer getLoja() {
+        return loja;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setLoja(Integer loja) {
+        this.loja = loja;
     }
-    
+
     @Override
     public String toString() {
-        return "Usuario [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", nascimento=" + nascimento + ", email=" + email
-                + ", ativo=" + ativo + ", tipo=" + tipo + "]";
+        return "ModelAluno{" + "id=" + id + ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", ativo=" + ativo + '}';
     }
-	
+
 }
