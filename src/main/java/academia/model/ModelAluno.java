@@ -20,7 +20,7 @@ public class ModelAluno {
     @NotNull
     private String nome;
 
-    private Date dataNascimento;
+    private String dataNascimento;
 
     @Max(value = 2)
     @Min(value = 1)
@@ -39,10 +39,14 @@ public class ModelAluno {
     private String numero;
     private String bairro;
     private Integer loja;
+    private String planoSaude;
+    private String esporte;
+    private String academia;
+    private String motivoAcademia;
+    private String comoSoube;
+    private String quemInformou;
 
-    public ModelAluno(Integer id, String nome, Date dataNascimento, Integer sexo, Integer ativo, String celular, String email,
-            String cidade, String uf, String cep, String rua, String numero, String bairro, Integer loja) {
-        super();
+    public ModelAluno(Integer id, String nome, String dataNascimento, Integer sexo, Integer ativo, String celular, String email, String cidade, String uf, String cep, String rua, String numero, String bairro, Integer loja, String planoSaude, String esporte, String academia, String motivoAcademia, String comoSoube, String quemInformou) {
         this.id = id;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
@@ -57,8 +61,14 @@ public class ModelAluno {
         this.numero = numero;
         this.bairro = bairro;
         this.loja = loja;
+        this.planoSaude = planoSaude;
+        this.esporte = esporte;
+        this.academia = academia;
+        this.motivoAcademia = motivoAcademia;
+        this.comoSoube = comoSoube;
+        this.quemInformou = quemInformou;
     }
-
+    
     public ModelAluno() {
     }
 
@@ -78,11 +88,11 @@ public class ModelAluno {
         this.nome = nome;
     }
 
-    public Date getDataNascimento() {
+    public String getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
@@ -172,6 +182,54 @@ public class ModelAluno {
 
     public void setLoja(Integer loja) {
         this.loja = loja;
+    }
+
+    public String getPlanoSaude() {
+        return planoSaude;
+    }
+
+    public void setPlanoSaude(String planoSaude) {
+        this.planoSaude = planoSaude;
+    }
+
+    public String getEsporte() {
+        return esporte;
+    }
+
+    public void setEsporte(String esporte) {
+        this.esporte = esporte;
+    }
+
+    public String getAcademia() {
+        return academia;
+    }
+
+    public void setAcademia(String academia) {
+        this.academia = academia;
+    }
+
+    public String getMotivoAcademia() {
+        return motivoAcademia;
+    }
+
+    public void setMotivoAcademia(String motivoAcademia) {
+        this.motivoAcademia = motivoAcademia;
+    }
+
+    public String getComoSoube() {
+        return comoSoube;
+    }
+
+    public void setComoSoube(String comoSoube) {
+        this.comoSoube = comoSoube;
+    }
+
+    public String getQuemInformou() {
+        return quemInformou;
+    }
+
+    public void setQuemInformou(String quemInformou) {
+        this.quemInformou = quemInformou;
     }
 
     @Override

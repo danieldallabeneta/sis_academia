@@ -5,6 +5,8 @@ import academia.jpa.AlunoRepository;
 import academia.model.ModelAluno;
 import jakarta.validation.Valid;
 import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +27,7 @@ public class AlunoRest {
     }
 
     @PostMapping("/aluno")
-    public ResponseEntity<ModelAluno> createLoja(@Valid @RequestBody ModelAluno aluno) {
+    public ResponseEntity<ModelAluno> createAluno(@Valid @RequestBody ModelAluno aluno) {
         ModelAluno savedLoja = repository.save(aluno);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -36,11 +38,18 @@ public class AlunoRest {
     }
 
     @GetMapping("/alunos/{id}")
-    public List<ModelAluno> allLojas(@PathVariable int id) throws Exception {
+    public List<ModelAluno> allAlunosByLoja(@PathVariable int id) throws Exception {
         List<ModelAluno> alunos = AlunoDao.getAllAlunoByLoja(repository, id);
         if (alunos.isEmpty()) {
-            throw new Exception("Erro: Id do usuário não encontrado");
+            throw new Exception("Erro: Nenhum Aluno cadastrado");
         } else {
+            for (ModelAluno aluno : alunos) {
+                SimpleDateFormat formatoOriginal = new SimpleDateFormat("yyyy-MM-dd");
+                Date data = formatoOriginal.parse(aluno.getDataNascimento());
+                SimpleDateFormat novoFormato = new SimpleDateFormat("dd-MM-yyyy");
+                String dataFormatada = novoFormato.format(data);
+                aluno.setDataNascimento(dataFormatada);
+            }
             return alunos;
         }
     }
