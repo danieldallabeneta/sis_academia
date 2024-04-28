@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.util.Date;
 
 @Entity(name = "tbaluno")
 public class ModelAluno {
