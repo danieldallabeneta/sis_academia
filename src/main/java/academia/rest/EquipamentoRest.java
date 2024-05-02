@@ -1,8 +1,8 @@
 package academia.rest;
 
-import academia.dao.AlunoDao;
-import academia.jpa.AlunoRepository;
-import academia.model.ModelAluno;
+import academia.dao.EquipamentoDao;
+import academia.jpa.EquipamentoRepository;
+import academia.model.ModelEquipamento;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.text.SimpleDateFormat;
@@ -18,45 +18,46 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-public class AlunoRest {
+public class EquipamentoRest {
+    
+    private EquipamentoRepository repo;
 
-    private AlunoRepository repository;
-
-    public AlunoRest(AlunoRepository repository) {
+    public EquipamentoRest(EquipamentoRepository repo) {
         super();
-        this.repository = repository;
+        this.repo = repo;
     }
-
-    @PostMapping("/aluno")
-    public ResponseEntity<ModelAluno> createAluno(@Valid @RequestBody ModelAluno aluno) {
-        ModelAluno savedLoja = repository.save(aluno);
+    
+    @PostMapping("/equipamento")
+    public ResponseEntity<ModelEquipamento> createEquipamento(@Valid @RequestBody ModelEquipamento equip) {
+        ModelEquipamento savedEquip = repo.save(equip);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(savedLoja.getId())
+                .buildAndExpand(savedEquip.getId())
                 .toUri();
 
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping("/alunos/{id}")
-    public List<ModelAluno> allAlunosByLoja(@PathVariable int id) throws Exception {
-        List<ModelAluno> alunos = AlunoDao.getAllAlunoByLoja(repository, id);
-        if (alunos.isEmpty()) {
+    @GetMapping("/equipamentos/{id}")
+    public List<ModelEquipamento> allEquipamentosByLoja(@PathVariable int id) throws Exception {
+        List<ModelEquipamento> equipamentos = EquipamentoDao.getAllEquipamentoByLoja(repo, id);
+        if (equipamentos.isEmpty()) {
             return null;
         } else {
-            for (ModelAluno aluno : alunos) {
+            for (ModelEquipamento equipa : equipamentos) {
                 SimpleDateFormat formatoOriginal = new SimpleDateFormat("yyyy-MM-dd");
-                Date data = formatoOriginal.parse(aluno.getDataNascimento());
+                Date data = formatoOriginal.parse(equipa.getDataAquisicao());
                 SimpleDateFormat novoFormato = new SimpleDateFormat("dd-MM-yyyy");
                 String dataFormatada = novoFormato.format(data);
-                aluno.setDataNascimento(dataFormatada);
+                equipa.setDataAquisicao(dataFormatada);
             }
-            return alunos;
+            return equipamentos;
         }
     }
     
-    @DeleteMapping("/aluno/{id}")
-    public void deleteAluno(@PathVariable int id) {
-        repository.deleteById(id);
+    @DeleteMapping("/equipamento/{id}")
+    public void deleteEquipamento(@PathVariable int id) {
+        repo.deleteById(id);
     }
+    
 }

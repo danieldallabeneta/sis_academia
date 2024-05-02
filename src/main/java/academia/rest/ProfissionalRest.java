@@ -1,6 +1,8 @@
 package academia.rest;
 
+import academia.dao.AtividadeDao;
 import academia.dao.ProfissionalDao;
+import academia.jpa.AtividadeRepository;
 import academia.jpa.ProfissionalRepository;
 import academia.model.ModelProfissional;
 import jakarta.validation.Valid;
@@ -21,10 +23,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class ProfissionalRest {
     
     private ProfissionalRepository repo;
+    private AtividadeRepository repoAtiv;
 
-    public ProfissionalRest(ProfissionalRepository repo) {
+    public ProfissionalRest(ProfissionalRepository repo, AtividadeRepository repoAtiv) {
         super();
         this.repo = repo;
+        this.repoAtiv = repoAtiv;
     }
     
     @PostMapping("/profissional")
@@ -42,7 +46,7 @@ public class ProfissionalRest {
     public List<ModelProfissional> allProfissionaisByLoja(@PathVariable int id) throws Exception {
         List<ModelProfissional> profissionais = ProfissionalDao.getAllProfissionalByLoja(repo, id);
         if (profissionais.isEmpty()) {
-            throw new Exception("Erro: Nenhum Profissional cadastrado");
+            return null;
         } else {
             for (ModelProfissional profissional : profissionais) {
                 SimpleDateFormat formatoOriginal = new SimpleDateFormat("yyyy-MM-dd");
@@ -56,8 +60,13 @@ public class ProfissionalRest {
     }
     
     @DeleteMapping("/profissional/{id}")
-    public void deleteProduct(@PathVariable int id) {
+    public boolean deleteProduct(@PathVariable int id) {
+        boolean existAtivProf = AtividadeDao.existAtividadeByProfessor(repoAtiv,id);
+        if(existAtivProf){
+            return false;
+        }
         repo.deleteById(id);
+        return true;
     }
     
 }

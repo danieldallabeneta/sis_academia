@@ -37,7 +37,11 @@ public class LojaRest {
 
     @GetMapping("/lojas")
     public List<ModelLoja> allLojas() {
-        return repository.findAll();
+        List<ModelLoja> lojas = repository.findAll();
+        if(lojas.isEmpty()){
+            return null;
+        }
+        return lojas;
     }
 
     @GetMapping("/lojas/{id}")
