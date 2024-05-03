@@ -48,7 +48,7 @@ public class LojaRest {
     public ModelLoja getLoja(@PathVariable int id) throws Exception {
         Optional<ModelLoja> loja = repository.findById(id);
         if (loja.isEmpty()) {
-            throw new Exception("Erro: Id da loja não encontrado");
+            return null;
         }
         return loja.get();
     }

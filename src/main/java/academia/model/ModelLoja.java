@@ -16,10 +16,22 @@ public class ModelLoja {
     @Size(min = 3)
     @NotNull
     private String nome;
+    
+    @Size(min = 3)
+    @NotNull
+    private String cidade;
+    
+    @NotNull
+    private String cnpj;
 
-    public ModelLoja() {
-        super();
+    public ModelLoja(Integer id, String nome, String cidade, String cnpj) {
+        this.id = id;
+        this.nome = nome;
+        this.cidade = cidade;
+        this.cnpj = cnpj;
     }
+
+    public ModelLoja() {}
 
     public Integer getId() {
         return id;
@@ -37,9 +49,25 @@ public class ModelLoja {
         this.nome = nome;
     }
 
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
     @Override
     public String toString() {
-        return "ModelLoja{" + "id=" + id + ", nome=" + nome + '}';
+        return "ModelLoja{" + "id=" + id + ", nome=" + nome + ", cidade=" + cidade + ", cnpj=" + cnpj + '}';
     }
 
 }
