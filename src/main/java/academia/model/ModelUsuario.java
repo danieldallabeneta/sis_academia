@@ -1,16 +1,11 @@
 package academia.model;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 @Entity(name = "tbusuario")
@@ -27,8 +22,6 @@ public class ModelUsuario {
     @NotNull
     private String cpf;
 
-    private String cartao;
-
     @NotNull
     private String email;
 
@@ -37,30 +30,46 @@ public class ModelUsuario {
 
     private String salt;
 
-    @Max(value = 2)
-    @Min(value = 1)
-    private Integer tipo;
+    @NotNull
+    private String cep;
 
-    @OneToMany(mappedBy = "usuario")
-    @JsonIgnore
-    private List<ModelCarrinho> carrinho;
+    @Size(min = 3)
+    private String rua;
 
-    public ModelUsuario(Integer id, @NotNull @Size(min = 3) String nome, @NotNull String cpf, String cartao,
-            @NotNull String email, @NotNull String password, String salt,
-            @Max(2) @Min(1) Integer tipo) {
+    @Size(min = 3)
+    private String bairro;
+
+    @NotNull
+    @Positive
+    private Integer numero;
+
+    @Size(min = 3)
+    private String cidade;
+
+    @Size(max = 2)
+    private String estado;
+
+    @Lob
+    private String complemento;
+
+    public ModelUsuario(Integer id, String nome, String cpf, String email, String password, String salt, String cep, String rua, String bairro, Integer numero, String cidade, String estado, String complemento) {
         super();
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
-        this.cartao = cartao;
         this.email = email;
         this.password = password;
         this.salt = salt;
-        this.tipo = tipo;
+        this.cep = cep;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.numero = numero;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.complemento = complemento;
     }
 
-    public ModelUsuario() {
-    }
+    public ModelUsuario() {}
 
     public Integer getId() {
         return id;
@@ -84,14 +93,6 @@ public class ModelUsuario {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getCartao() {
-        return cartao;
-    }
-
-    public void setCartao(String cartao) {
-        this.cartao = cartao;
     }
 
     public String getEmail() {
@@ -118,26 +119,65 @@ public class ModelUsuario {
         this.salt = salt;
     }
 
-    public Integer getTipo() {
-        return tipo;
+    public String getCep() {
+        return cep;
     }
 
-    public void setTipo(Integer tipo) {
-        this.tipo = tipo;
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
-    public List<ModelCarrinho> getCarrinho() {
-        return carrinho;
+    public String getRua() {
+        return rua;
     }
 
-    public void setCarrinho(List<ModelCarrinho> carrinho) {
-        this.carrinho = carrinho;
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 
     @Override
     public String toString() {
-        return "ModelUsuario [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", cartao=" + cartao + ", email=" + email
-                + ", password=" + password + ", salt=" + salt + ", tipo=" + tipo + "]";
+        return "ModelUsuario{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", email=" + email + ", password=" + password + ", salt=" + salt + '}';
     }
 
 }
