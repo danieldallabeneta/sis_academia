@@ -4,6 +4,7 @@ import academia.dao.UsuarioDao;
 import academia.jpa.UsuarioRepository;
 import academia.model.ModelCredencial;
 import academia.model.ModelUsuario;
+import academia.model.ModelUsuarioAuxiliar;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 public class UsuarioRest {
@@ -28,21 +30,26 @@ public class UsuarioRest {
     }
 
     @PostMapping("/users")
-    public ModelUsuario createUser(@Valid @RequestBody ModelUsuario user) {
+    public Integer createUser(@Valid @RequestBody ModelUsuarioAuxiliar user) {
         Optional<ModelUsuario> aux = usuarioRepository.findByEmail(user.getEmail());
 
         if (aux.isEmpty()) {
-
-            ModelCredencial cred = new ModelCredencial(user.getPassword());
+            ModelUsuario usuario = new ModelUsuario();
+            usuario.setNome(user.getNome());
+            usuario.setCpf(user.getCpf());
+            usuario.setEmail(user.getEmail());
+            usuario.setPassword(user.getPassword());
+            
+            ModelCredencial cred = new ModelCredencial(usuario.getPassword());
             String[] encript = cred.getSenhaCriptografada();
-            user.setPassword(encript[0]);
-            user.setSalt(encript[1]);
-            ModelUsuario savedUser = usuarioRepository.save(user);
+            usuario.setPassword(encript[0]);
+            usuario.setSalt(encript[1]);
+            ModelUsuario savedUser = usuarioRepository.save(usuario);
 
-            return savedUser;
+            return savedUser.getId();
         }
 
-        return new ModelUsuario();
+        return aux.get().getId();
     }
 
     @GetMapping("/users")
@@ -81,6 +88,23 @@ public class UsuarioRest {
         }
         boolean valido = BCrypt.checkpw(credencial.getSenha(), user.get(0).getPassword());
         return valido;
+    }
+
+    @PutMapping("/user")
+    public void updateUser(@Valid @RequestBody ModelUsuario user) {
+        Optional<ModelUsuario> aux = usuarioRepository.findById(user.getId());
+
+        if (!aux.isEmpty()) {
+            ModelUsuario usuario = aux.get();
+            usuario.setBairro(user.getBairro());
+            usuario.setCep(user.getCep());
+            usuario.setCidade(user.getCidade());
+            usuario.setComplemento(user.getComplemento());
+            usuario.setEstado(user.getEstado());
+            usuario.setRua(user.getRua());
+            usuario.setNumero(user.getNumero());
+            usuarioRepository.save(usuario);
+        } 
     }
 
 }

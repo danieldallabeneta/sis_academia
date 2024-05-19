@@ -1,13 +1,5 @@
 package academia.model;
 
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import java.util.Date;
-
-/**
- *
- * @author danie
- */
 public class ModelHorarioReturn {
         
     private String horaInicio;

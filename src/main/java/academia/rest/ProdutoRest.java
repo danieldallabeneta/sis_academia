@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
-import academia.dao.ProdutoDao;
-import academia.jpa.ProdutoPedidoRepository;
 import academia.jpa.ProdutoRepository;
 import academia.model.ModelProduto;
 
@@ -23,12 +21,10 @@ import academia.model.ModelProduto;
 public class ProdutoRest {
 
     private ProdutoRepository repository;
-    private ProdutoPedidoRepository prodPedRepository;
 
-    public ProdutoRest(ProdutoRepository repository, ProdutoPedidoRepository prodPedRepository) {
+    public ProdutoRest(ProdutoRepository repository) {
         super();
         this.repository = repository;
-        this.prodPedRepository = prodPedRepository;
     }
 
     @PostMapping("/products")
@@ -60,25 +56,6 @@ public class ProdutoRest {
     public void deleteProduct(@PathVariable int id) {
         repository.deleteById(id);
     }
-
-    @GetMapping("/sucessos")
-    public List<ModelProduto> allSucesso() {
-        List<ModelProduto> lista = ProdutoDao.getSucessos(repository);
-
-        if (!lista.isEmpty()) {
-            return lista;
-        }
-        return null;
-    }
-
-    @GetMapping("/topproduct")
-    public List<ModelProduto> top5Products() {
-        List<ModelProduto> lista = ProdutoDao.getTop5(repository, prodPedRepository);
-
-        if (!lista.isEmpty()) {
-            return lista;
-        }
-        return null;
-    }
+    
 
 }

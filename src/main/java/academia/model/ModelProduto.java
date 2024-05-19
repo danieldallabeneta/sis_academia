@@ -18,11 +18,6 @@ public class ModelProduto {
     @NotNull
     private String descricao;
 
-    private String foto;
-
-    @NotNull
-    private String tamanho;
-
     @NotNull
     private float preco;
 
@@ -30,22 +25,19 @@ public class ModelProduto {
     private Integer quantidade;
 
     private String informacao;
+    
+    private Integer loja;
 
-    public ModelProduto(Integer id, @Size(min = 3) @NotNull String descricao, String foto, @NotNull String tamanho,
-            @NotNull float preco, @PositiveOrZero Integer quantidade, String informacao) {
-        super();
+    public ModelProduto(Integer id, String descricao, float preco, Integer quantidade, String informacao, Integer loja) {
         this.id = id;
         this.descricao = descricao;
-        this.foto = foto;
-        this.tamanho = tamanho;
         this.preco = preco;
         this.quantidade = quantidade;
         this.informacao = informacao;
+        this.loja = loja;
     }
 
-    public ModelProduto() {
-        super();
-    }
+    public ModelProduto() {}
 
     public Integer getId() {
         return id;
@@ -61,22 +53,6 @@ public class ModelProduto {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-
-    public String getTamanho() {
-        return tamanho;
-    }
-
-    public void setTamanho(String tamanho) {
-        this.tamanho = tamanho;
     }
 
     public float getPreco() {
@@ -103,10 +79,18 @@ public class ModelProduto {
         this.informacao = informacao;
     }
 
+    public Integer getLoja() {
+        return loja;
+    }
+
+    public void setLoja(Integer loja) {
+        this.loja = loja;
+    }
+
     @Override
     public String toString() {
-        return "ModelProduto [id=" + id + ", descricao=" + descricao + ", foto=" + foto + ", tamanho=" + tamanho
-                + ", preco=" + preco + ", quantidade=" + quantidade + ", informacao=" + informacao + "]";
-    }
+        return "ModelProduto{" + "id=" + id + ", descricao=" + descricao + ", preco=" + preco + ", quantidade=" + quantidade + ", informacao=" + informacao + '}';
+    }    
+    
 
 }

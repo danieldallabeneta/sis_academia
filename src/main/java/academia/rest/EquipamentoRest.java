@@ -8,11 +8,13 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -55,9 +57,27 @@ public class EquipamentoRest {
         }
     }
     
+    @GetMapping("/equipamento/{id}")
+    public ModelEquipamento getEquipamentoById(@PathVariable int id) throws Exception {
+        Optional<ModelEquipamento> equip = repo.findById(id);
+        if (equip.isEmpty()) {
+            return null;
+        } else {
+            return equip.get();
+        }
+    }
+    
     @DeleteMapping("/equipamento/{id}")
     public void deleteEquipamento(@PathVariable int id) {
         repo.deleteById(id);
     }
     
+    @PutMapping("/equipamento")
+    public void updateEquipamento(@Valid @RequestBody ModelEquipamento equipa) {
+        Optional<ModelEquipamento> aux = repo.findById(equipa.getId());
+
+        if (!aux.isEmpty()) {
+            repo.save(equipa);
+        } 
+    }
 }

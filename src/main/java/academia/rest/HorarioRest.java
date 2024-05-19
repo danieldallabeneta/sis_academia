@@ -1,6 +1,5 @@
 package academia.rest;
 
-import academia.dao.HorarioDao;
 import academia.jpa.AtividadeRepository;
 import academia.jpa.HorarioRepository;
 import academia.jpa.ProfissionalRepository;
@@ -15,16 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 public class HorarioRest {
@@ -70,7 +68,7 @@ public class HorarioRest {
     
     @GetMapping("/horarios/{id}")
     public List<ModelHorario> allHorarioByLoja(@PathVariable int id) throws Exception {
-        List<ModelHorario> horarios = HorarioDao.getAllHorarioByLoja(repo, id);
+        List<ModelHorario> horarios = repo.findAllByLojaOrderById(id);
         if (horarios.isEmpty()) {
             return null;
         } else {
@@ -84,9 +82,28 @@ public class HorarioRest {
         }
     }
     
+    @GetMapping("/horario/{id}")
+    public ModelHorario getHorarioById(@PathVariable int id) throws Exception {
+        Optional<ModelHorario> horario = repo.findById(id);
+        if (horario.isEmpty()) {
+            return null;
+        } else {
+            return horario.get();
+        }
+    }
+    
     @DeleteMapping("/horario/{id}")
     public void deleteHorario(@PathVariable int id) {
         repo.deleteById(id);
+    }
+    
+    @PutMapping("/horario")
+    public void updateHorario(@Valid @RequestBody ModelHorario horario) {
+        Optional<ModelHorario> aux = repo.findById(horario.getId());
+
+        if (!aux.isEmpty()) {
+            repo.save(horario);
+        } 
     }
     
 }

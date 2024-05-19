@@ -29,24 +29,17 @@ public class ModelUsuario {
     private String password;
 
     private String salt;
-
-    @NotNull
+    
     private String cep;
 
-    @Size(min = 3)
     private String rua;
 
-    @Size(min = 3)
     private String bairro;
-
-    @NotNull
-    @Positive
+   
     private Integer numero;
 
-    @Size(min = 3)
     private String cidade;
 
-    @Size(max = 2)
     private String estado;
 
     @Lob
@@ -67,6 +60,13 @@ public class ModelUsuario {
         this.cidade = cidade;
         this.estado = estado;
         this.complemento = complemento;
+    }
+
+    public ModelUsuario(String nome, String cpf, String email, String password) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.password = password;
     }
 
     public ModelUsuario() {}
