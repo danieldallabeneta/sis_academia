@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import jakarta.validation.Valid;
 import academia.jpa.ProdutoRepository;
 import academia.model.ModelProduto;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 public class ProdutoRest {
@@ -38,13 +39,17 @@ public class ProdutoRest {
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping("/products")
-    public List<ModelProduto> allProducts() {
-        return repository.findAll();
+    @GetMapping("/products/{id}")
+    public List<ModelProduto> allHorarioByLoja(@PathVariable int id) throws Exception {
+        List<ModelProduto> horarios = repository.findAllByLojaOrderById(id);
+        if (horarios.isEmpty()) {
+            return null;
+        }
+        return horarios;
     }
 
-    @GetMapping("/products/{id}")
-    public ModelProduto getProduto(@PathVariable int id) throws Exception {
+    @GetMapping("/product/{id}")
+    public ModelProduto getProduct(@PathVariable int id) throws Exception {
         Optional<ModelProduto> produto = repository.findById(id);
         if (produto.isEmpty()) {
             throw new Exception("Erro: Id do produto não encontrado");
@@ -52,10 +57,18 @@ public class ProdutoRest {
         return produto.get();
     }
 
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/product/{id}")
     public void deleteProduct(@PathVariable int id) {
         repository.deleteById(id);
     }
     
+    @PutMapping("/product")
+    public void updateProduct(@Valid @RequestBody ModelProduto product) {
+        Optional<ModelProduto> aux = repository.findById(product.getId());
+
+        if (!aux.isEmpty()) {
+            repository.save(product);
+        } 
+    }
 
 }
