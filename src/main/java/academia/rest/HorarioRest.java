@@ -58,6 +58,7 @@ public class HorarioRest {
             horario.setHoraInicio(horaInicio);
             horario.setHoraTermino(horaTermino);
             horario.setLoja(horarios.getLoja());
+            horario.setConsumo(0);
             saved.add(horario);
         }
         
@@ -82,6 +83,22 @@ public class HorarioRest {
         }
     }
     
+    @GetMapping("/horariosCap/{id}")
+    public List<ModelHorario> allHorarioCapacidadeByLoja(@PathVariable int id) throws Exception {
+        List<ModelHorario> horarios = repo.findAllByLojaAndCapacidadeOrderById(id);
+        if (horarios.isEmpty()) {
+            return null;
+        } else {
+            for (ModelHorario horario : horarios) {
+                Optional<ModelAtividade> ativ = repoAtiv.findById(horario.getAtividade());
+                Optional<ModelProfissional> prof = repoProf.findById(ativ.get().getProfessor());
+                horario.setNomeProfessor(prof.get().getNome());
+                horario.setNomeAtividade(ativ.get().getNome());
+            }
+            return horarios;
+        }
+    }
+    
     @GetMapping("/horario/{id}")
     public ModelHorario getHorarioById(@PathVariable int id) throws Exception {
         Optional<ModelHorario> horario = repo.findById(id);
@@ -90,7 +107,7 @@ public class HorarioRest {
         } else {
             return horario.get();
         }
-    }
+    }    
     
     @DeleteMapping("/horario/{id}")
     public void deleteHorario(@PathVariable int id) {

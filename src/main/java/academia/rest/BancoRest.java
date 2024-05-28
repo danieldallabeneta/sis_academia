@@ -1,9 +1,7 @@
 package academia.rest;
 
-import academia.dao.BancoDao;
 import academia.jpa.BancoRepository;
 import academia.model.ModelBanco;
-import academia.model.ModelHorario;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.text.SimpleDateFormat;

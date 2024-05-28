@@ -11,4 +11,7 @@ public interface HorarioRepository extends JpaRepository<ModelHorario, Integer>{
     @Query(value = "Select * From tbhorario where loja = :loja Order by id", nativeQuery = true)
     List<ModelHorario> findAllByLojaOrderById(@Param("loja") Integer loja);
     
+    @Query(value = "Select tbhorario.* From tbhorario join tbatividade on tbatividade.id = tbhorario.atividade where tbatividade.loja = :loja and capacidade > 0 Order by tbatividade.nome", nativeQuery = true)
+    List<ModelHorario> findAllByLojaAndCapacidadeOrderById(@Param("loja") Integer loja);
+    
 }

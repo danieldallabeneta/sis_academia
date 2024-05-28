@@ -33,6 +33,8 @@ public class ModelHorario {
     
     private Integer capacidade;
     
+    private Integer consumo;
+    
     private Integer loja;
     
     @Transient
@@ -41,17 +43,19 @@ public class ModelHorario {
     @Transient
     private String nomeAtividade;
 
-    public ModelHorario(Integer id, Integer atividade, Integer diaSemana, Date horaInicio, Date horaTermino, Integer capacidade, Integer loja) {
-        super();
+    public ModelHorario(Integer id, Integer atividade, Integer diaSemana, Date horaInicio, Date horaTermino, Integer capacidade, Integer consumo, Integer loja, String nomeProfessor, String nomeAtividade) {
         this.id = id;
         this.atividade = atividade;
         this.diaSemana = diaSemana;
         this.horaInicio = horaInicio;
         this.horaTermino = horaTermino;
         this.capacidade = capacidade;
+        this.consumo = consumo;
         this.loja = loja;
+        this.nomeProfessor = nomeProfessor;
+        this.nomeAtividade = nomeAtividade;
     }
-
+    
     public ModelHorario() {}
 
     public Integer getId() {
@@ -124,6 +128,14 @@ public class ModelHorario {
 
     public void setNomeAtividade(String nomeAtividade) {
         this.nomeAtividade = nomeAtividade;
+    }
+
+    public Integer getConsumo() {
+        return consumo;
+    }
+
+    public void setConsumo(Integer consumo) {
+        this.consumo = consumo;
     }
 
     @Override
