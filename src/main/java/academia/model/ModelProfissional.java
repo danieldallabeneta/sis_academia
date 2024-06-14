@@ -9,45 +9,44 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-
 @Entity(name = "tbprofissional")
 public class ModelProfissional {
-    
+
     @Id
     @GeneratedValue
     private Integer id;
-    
-     @Size(min = 3)
+
+    @Size(min = 3)
     @NotNull
     private String nome;
 
     private String dataNascimento;
-    
+
     private String cpf;
-    
+
     @Max(value = 2)
     @Min(value = 1)
     private Integer sexo;
-    
+
     @Max(value = 1)
     @Min(value = 0)
     private Integer ativo;
-    
-    private String email;    
+
+    private String email;
     private String telefone;
     private String celular;
-    
+
     private Integer loja;
-    
+
     private String rua;
     private String bairro;
     private String cidade;
     private String cep;
-    
+
     @Size(max = 2)
     private String uf;
     private Integer numero;
-    
+
     @Lob
     private String experiencia;
 
@@ -71,7 +70,8 @@ public class ModelProfissional {
         this.experiencia = experiencia;
     }
 
-    public ModelProfissional() {}
+    public ModelProfissional() {
+    }
 
     public Integer getAtivo() {
         return ativo;
@@ -80,7 +80,7 @@ public class ModelProfissional {
     public void setAtivo(Integer ativo) {
         this.ativo = ativo;
     }
-    
+
     public Integer getId() {
         return id;
     }
@@ -213,5 +213,5 @@ public class ModelProfissional {
     public String toString() {
         return "ModelProfissional{" + "id=" + id + ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", cpf=" + cpf + '}';
     }
-    
+
 }
