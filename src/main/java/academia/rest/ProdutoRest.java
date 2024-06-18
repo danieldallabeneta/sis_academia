@@ -70,5 +70,14 @@ public class ProdutoRest {
             repository.save(product);
         } 
     }
+    
+    public void diminuirQuantidade(Integer product, Integer quantidade){
+        Optional<ModelProduto> aux = repository.findById(product);
+        if (!aux.isEmpty()) {
+            ModelProduto produto = aux.get();
+            produto.setQuantidade(produto.getQuantidade() - quantidade);            
+            repository.save(produto);
+        } 
+    }
 
 }

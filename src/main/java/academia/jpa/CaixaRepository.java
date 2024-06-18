@@ -10,5 +10,11 @@ public interface CaixaRepository extends JpaRepository<ModelCaixa, Integer>{
  
     @Query(value = "Select * From tbcaixa where loja = :loja Order by data", nativeQuery = true)
     List<ModelCaixa> findAllByLojaOrderByDate(@Param("loja") Integer loja);
+        
+    @Query(value = "Select * "
+                   + "From tbcaixa "
+                  + "where data = :data ", nativeQuery = true)
+    List<ModelCaixa> findAllByData(@Param("data") String data);
     
+    List<ModelCaixa> findByData(String data);
 }

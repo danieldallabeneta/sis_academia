@@ -20,12 +20,12 @@ public class ModelVenda {
     
     private String nome;
     
-    @Max(value = 2)
-    @Min(value = 1)
+    @Max(value = 2)/* Loja */
+    @Min(value = 1)/* Bar*/
     private Integer tipoVenda;
     
-    @Max(value = 2)
-    @Min(value = 1)
+    @Max(value = 2)/* A prazo*/
+    @Min(value = 1)/* A vista*/
     private Integer tipoPagamento;
     
     private String data;
@@ -34,10 +34,12 @@ public class ModelVenda {
     
     private Integer usuario;
     
+    private Integer loja;
+    
     @Transient
     private String nomeAluno;
 
-    public ModelVenda(Integer id, Integer caixa, Integer aluno, String nome, Integer tipoVenda, Integer tipoPagamento, String data, float valorTotal, Integer usuario) {
+    public ModelVenda(Integer id, Integer caixa, Integer aluno, String nome, Integer tipoVenda, Integer tipoPagamento, String data, float valorTotal, Integer usuario, Integer loja) {
         this.id = id;
         this.caixa = caixa;
         this.aluno = aluno;
@@ -47,6 +49,7 @@ public class ModelVenda {
         this.data = data;
         this.valorTotal = valorTotal;
         this.usuario = usuario;
+        this.loja = loja;
     }
 
     public ModelVenda() {}
@@ -129,6 +132,26 @@ public class ModelVenda {
 
     public void setNomeAluno(String nomeAluno) {
         this.nomeAluno = nomeAluno;
+    }
+
+    public Integer getLoja() {
+        return loja;
+    }
+
+    public void setLoja(Integer loja) {
+        this.loja = loja;
+    }
+    
+    public void carregaDadosModelo(ModelVendaAuxiliar aux){
+        this.setAluno(aux.getAluno());
+        this.setCaixa(aux.getCaixa());
+        this.setNome(aux.getNome());
+        this.setTipoVenda(aux.getTipoVenda());
+        this.setTipoPagamento(aux.getTipoPagamento());
+        this.setData(aux.getData());
+        this.setValorTotal(aux.getValorTotal());
+        this.setUsuario(aux.getUsuario());
+        this.setLoja(aux.getLoja());
     }
 
     @Override

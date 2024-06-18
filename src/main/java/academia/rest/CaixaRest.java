@@ -1,7 +1,11 @@
 package academia.rest;
 
+import academia.jpa.AlunoRepository;
 import academia.jpa.CaixaRepository;
+import academia.jpa.VendaRepository;
+import academia.model.ModelAluno;
 import academia.model.ModelCaixa;
+import academia.model.ModelVenda;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.text.SimpleDateFormat;
@@ -22,10 +26,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class CaixaRest {
     
     private CaixaRepository repo;
+    private VendaRepository repoVenda;
+    private AlunoRepository repoAluno;
 
-    public CaixaRest(CaixaRepository repo) {
-        super();
+    public CaixaRest(CaixaRepository repo, VendaRepository repoVenda, AlunoRepository repoAluno) {
         this.repo = repo;
+        this.repoVenda = repoVenda;
+        this.repoAluno = repoAluno;
     }
     
     @PostMapping("/caixa")
@@ -66,6 +73,30 @@ public class CaixaRest {
         }
     }
     
+    /**
+     * Retorna o caixa com situação aberto para a
+     * @param data
+     * @return
+     * @throws Exception 
+     */
+    @GetMapping("/caixadata/{data}")
+    public ModelCaixa getCaixaByData(@PathVariable String data) throws Exception {
+        List<ModelCaixa> caixas = repo.findAllByData(data);
+        if (caixas.isEmpty()) {
+            return null;
+        } else {
+            for (ModelCaixa caixa : caixas) {
+                SimpleDateFormat formatoOriginal = new SimpleDateFormat("yyyy-MM-dd");
+                Date dataCaixa = formatoOriginal.parse(caixa.getData());
+                SimpleDateFormat novoFormato = new SimpleDateFormat("dd-MM-yyyy");
+                String dataFormatada = novoFormato.format(dataCaixa);
+                caixa.setData(dataFormatada);
+                return caixa;
+            }
+        }
+        return null;
+    }
+    
     @DeleteMapping("/caixa/{id}")
     public void deleteCaixa(@PathVariable int id) {
         repo.deleteById(id);
@@ -99,5 +130,22 @@ public class CaixaRest {
         } 
     }
     
+    @GetMapping("/caixa/vendas/{id}")
+    public List<ModelVenda> getVendasCaixa(@PathVariable int id) throws Exception {
+        List<ModelVenda> vendas = repoVenda.findAllByCaixa(id);
+        if (vendas.isEmpty()) {
+            return null;
+        } else {
+            for (ModelVenda venda : vendas) {
+                if(venda.getAluno() != null){
+                    Optional<ModelAluno> aluno = repoAluno.findById(venda.getAluno());
+                    if(!aluno.isEmpty()){
+                        venda.setNomeAluno(aluno.get().getNome());
+                    }
+                }               
+            }
+            return vendas;
+        }
+    }
     
 }
