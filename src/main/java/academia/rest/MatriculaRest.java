@@ -46,7 +46,6 @@ public class MatriculaRest {
     @GetMapping("/matriculas/{id}")
     public List<ModelMatricula> allMatriculasByLoja(@PathVariable int id) throws Exception {
         List<ModelMatricula> matriculas = repo.findAllByLojaOrderByAluno(id);
-//        List<ModelMatricula> matriculas = MatriculaDao.getAllMatriculaByLoja(repo, id);
         if (matriculas.isEmpty()) {
             return null;
         } else {
@@ -70,6 +69,16 @@ public class MatriculaRest {
             return null;
         } else {
             return matricula.get();
+        }
+    }    
+    
+    @GetMapping("/matricula/aluno/{id}")
+    public ModelMatricula getMatriculaByIdAluno(@PathVariable int id) throws Exception {
+        ModelMatricula matricula = repo.findFirstByAluno(id);
+        if (matricula.getId() == null) {
+            return null;
+        } else {
+            return matricula;
         }
     }    
 

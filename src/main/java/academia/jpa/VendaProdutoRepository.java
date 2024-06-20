@@ -8,7 +8,12 @@ import org.springframework.data.repository.query.Param;
 
 public interface VendaProdutoRepository extends JpaRepository<ModelVendaProduto, Integer>{
     
-    @Query(value = "Select * From tbvendaproduto where venda = :venda", nativeQuery = true)
+    @Query(value = "Select tbvendaproduto.* "
+                   + "From tbvendaproduto "
+                   + "join tbvenda"
+                    + " on tbvenda.id = tbvendaproduto.caixa"
+                  + "where tbvendaproduto.venda = :venda"
+                    + "and tbvenda.tipovenda <> 3", nativeQuery = true)
     List<ModelVendaProduto> findAllByVendaOrder(@Param("venda") Integer venda);
     
     

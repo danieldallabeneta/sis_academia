@@ -18,4 +18,9 @@ public interface MatriculaRepository extends JpaRepository<ModelMatricula, Integ
     
     @Query(value = "Select * From tbmatricula where loja = :loja and aluno = :aluno", nativeQuery = true)
     ModelMatricula findFirstByAlunoAndLoja(@Param("loja") Integer loja, @Param("aluno") Integer aluno);
+    
+    @Query(value = "Select * "
+                   + "From tbmatricula "
+                  + "where aluno = :aluno", nativeQuery = true)
+    ModelMatricula findFirstByAluno(@Param("aluno") Integer aluno);
 }

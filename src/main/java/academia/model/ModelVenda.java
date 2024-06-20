@@ -20,7 +20,7 @@ public class ModelVenda {
     
     private String nome;
     
-    @Max(value = 2)/* Loja */
+    @Max(value = 3)/* Loja */
     @Min(value = 1)/* Bar*/
     private Integer tipoVenda;
     
